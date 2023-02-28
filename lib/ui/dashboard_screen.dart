@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/ui/app_screen/new_task_screen.dart';
 import 'package:task_manager/ui/app_screen/update_profile_screen.dart';
-import 'package:task_manager/ui/nav_screen/cancel_task_screen.dart';
-import 'package:task_manager/ui/nav_screen/compled_task_screen.dart';
-import 'package:task_manager/ui/nav_screen/in_progress_task_screen.dart';
-import 'package:task_manager/ui/nav_screen/new_task_screen.dart';
+import 'package:task_manager/ui/task/cancel_task.dart';
+import 'package:task_manager/ui/task/compled_task.dart';
+import 'package:task_manager/ui/task/in_progress_task.dart';
+import 'package:task_manager/ui/task/new_task.dart';
 
 import '../widgets/top_profile_bar_widget.dart';
 
