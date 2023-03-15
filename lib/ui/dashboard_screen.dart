@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/data/shared_preferece_data.dart';
+import 'package:task_manager/ui/app_screen/LoginScreen.dart';
 import 'package:task_manager/ui/app_screen/new_task_screen.dart';
 import 'package:task_manager/ui/app_screen/update_profile_screen.dart';
 import 'package:task_manager/ui/task/cancel_task.dart';
 import 'package:task_manager/ui/task/compled_task.dart';
 import 'package:task_manager/ui/task/in_progress_task.dart';
 import 'package:task_manager/ui/task/new_task.dart';
-
 import '../widgets/top_profile_bar_widget.dart';
 
 class Dashboard extends StatefulWidget {
@@ -19,6 +20,9 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int _selectedScreen = 0;
 
+
+
+
   List<Widget> navScreen = [
     const MyNewTask(),
     const MyCompletedTask(),
@@ -27,7 +31,15 @@ class _DashboardState extends State<Dashboard> {
   ];
 
   @override
+  void initState() {
+    SharedPrefData.getDataFromSharedPref();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.green,
@@ -61,11 +73,15 @@ class _DashboardState extends State<Dashboard> {
         child: Column(
           children: [
             TopProfileBar(
-                userName: "Mohammed Imran",
-                userEmail: "emon08ctg@gmail.com",
+                userName: "${SharedPrefData.userFirstName} ${SharedPrefData.userLastName}",
+                userEmail: "${SharedPrefData.userEmail}",
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const UpdateProfile()));
-                },),
+                },
+            onLogout: (){
+                  SharedPrefData.clearData();
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const Login()), (route) => false);
+            },),
             Expanded(child: navScreen.elementAt(_selectedScreen)),
           ],
         ),

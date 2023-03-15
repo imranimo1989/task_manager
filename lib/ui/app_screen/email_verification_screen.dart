@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/ui/Utills/SnacbarMessage.dart';
+import 'package:http/http.dart' as http;
+import 'package:task_manager/ui/app_screen/pin_Verification.dart';
 
+import '../../data/urls.dart';
 import '../../widgets/app_Text_Form_Field_Widget.dart';
 import '../../widgets/app_buttoon_style_widget.dart';
 import '../../widgets/screen_background_widget.dart';
@@ -12,9 +16,16 @@ class ForgotPasswordAndEmailVerification extends StatefulWidget {
   State<ForgotPasswordAndEmailVerification> createState() =>
       _ForgotPasswordAndEmailVerificationState();
 }
+TextEditingController textEditingController = TextEditingController();
+
+
 
 class _ForgotPasswordAndEmailVerificationState
     extends State<ForgotPasswordAndEmailVerification> {
+
+  bool isLoading = false;
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -37,15 +48,26 @@ class _ForgotPasswordAndEmailVerificationState
                   height: 24,
                 ),
                 appTextEditingStyle(
-                    hintText: 'Email', controller: TextEditingController()),
+                    hintText: 'Email', controller: textEditingController),
                 const SizedBox(
                   height: 24,
                 ),
 
-                AppButtonStyleWidget(onPressed: (){
-                  Navigator.pushNamed(context, '/PinVerification');
+                AppButtonStyleWidget(onPressed: () async {
+
+               if(textEditingController.text.isNotEmpty){
+                 isLoading = true;
+                  final response = await http.get(Uri.parse(Urls.forgetPassword(textEditingController.text)));
+                 isLoading = false;
+                 if(response.statusCode==200){
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=>PinVerification(textEditingController.text)));
+                 }
+               }else{
+                 snackBarMessage(context, "Please enter your register email address",true);
+               }
+
                 },
-                    child: const Icon(Icons.arrow_circle_right_outlined)),
+                    child: isLoading? (const CircularProgressIndicator()): const Icon(Icons.arrow_circle_right_outlined)),
                 const SizedBox(
                   height: 40,
                 ),
@@ -62,6 +84,7 @@ class _ForgotPasswordAndEmailVerificationState
                     ),
                     TextButton(
                         onPressed: () {
+
                           Navigator.pushNamed(context, "/Login");
                         },
                         child: const Text(

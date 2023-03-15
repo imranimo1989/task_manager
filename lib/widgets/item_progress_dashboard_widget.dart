@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 class ItemCountBoard extends StatelessWidget {
   final String itemCount, itemName;
 
+  final Color cardBackgroundColor;
+
   const ItemCountBoard(
-      {super.key, required this.itemCount, required this.itemName});
+      {super.key, required this.itemCount, required this.itemName, required this.cardBackgroundColor});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(4),
+      color: cardBackgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(

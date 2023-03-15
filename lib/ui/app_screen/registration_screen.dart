@@ -1,6 +1,6 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/data/network_utils.dart';
 import 'package:task_manager/data/urls.dart';
 
@@ -20,20 +20,21 @@ class Registration extends StatefulWidget {
   State<Registration> createState() => _RegistrationState();
 }
 
-final _formKey = GlobalKey<FormState>();
-
-TextEditingController emailEtController = TextEditingController();
-TextEditingController firstNameEtController = TextEditingController();
-TextEditingController lastNameEtController = TextEditingController();
-TextEditingController mobileEtController = TextEditingController();
-TextEditingController passwordEtController = TextEditingController();
-
- bool isLoading = false;
-
-
-
 
 class _RegistrationState extends State<Registration> {
+
+
+
+  final _formKey = GlobalKey<FormState>();
+
+  TextEditingController emailEtController = TextEditingController();
+  TextEditingController firstNameEtController = TextEditingController();
+  TextEditingController lastNameEtController = TextEditingController();
+  TextEditingController mobileEtController = TextEditingController();
+  TextEditingController passwordEtController = TextEditingController();
+
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,43 +131,8 @@ class _RegistrationState extends State<Registration> {
                       ),
                       AppButtonStyleWidget(
                           onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              isLoading = true;
-                              setState(() {
-                              });
-                              final result = await NetworkUtils.httpPostMethod(
-                                Urls.registrationUrl,
-                                body: {
-                                  "email": emailEtController.text.trim(),
-                                  "firstName": firstNameEtController.text.trim(),
-                                  "lastName": lastNameEtController.text.trim(),
-                                  "mobile": mobileEtController.text.trim(),
-                                  "password": passwordEtController.text,
-                                }
-                              );
-                              isLoading =false;
-                              setState(() {
-
-                              });
-                              if(result != null && result["status"]=="success")
-                              {
-                                snackBarMessage(context,'Registration Success, Please login to enter...',);
-
-                                emailEtController.clear();
-                                firstNameEtController.clear();
-                                lastNameEtController.clear();
-                                mobileEtController.clear();
-                                passwordEtController.clear();
-
-
-                              }
-                              else{
-                                snackBarMessage(context, "Registration failed! try again", true);
-                              }
-                       
-
-                              Navigator.pushNamed(context, '/Login');
-                            }
+                            ///Registration process
+                            await registration(context);
                           },
                           child: isLoading ? (const CircularProgressIndicator( color: Colors.white,)): const Icon(Icons.arrow_circle_right_outlined)),
                       const SizedBox(
@@ -206,5 +172,48 @@ class _RegistrationState extends State<Registration> {
         ),
       ),
     );
+  }
+
+  Future<void> registration(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      isLoading = true;
+      setState(() {
+      });
+      final result = await NetworkUtils.httpPostMethod(
+        Urls.registrationUrl,
+        header: {"Content-Type": "application/json"},
+        body: {
+          "email": emailEtController.text.trim(),
+          "firstName": firstNameEtController.text.trim(),
+          "lastName": lastNameEtController.text.trim(),
+          "mobile": mobileEtController.text.trim(),
+          "password": passwordEtController.text,
+        }
+      );
+      isLoading =false;
+      setState(() {
+
+      });
+      if(result != null && result["status"]=="success")
+      {
+        SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
+        sharedPreferences.setString("regEmail", emailEtController.text.trim());
+
+        snackBarMessage(context,'Registration Success, Please login to enter...',);
+
+        emailEtController.clear();
+        firstNameEtController.clear();
+        lastNameEtController.clear();
+        mobileEtController.clear();
+        passwordEtController.clear();
+
+
+      }
+      else{
+        snackBarMessage(context, "Registration failed! try again", true);
+      }
+
+      Navigator.pushNamed(context, '/Login');
+    }
   }
 }
