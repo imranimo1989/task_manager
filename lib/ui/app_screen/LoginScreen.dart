@@ -177,8 +177,9 @@ class _LoginState extends State<Login> {
             result['data']['email'],
             result['data']['firstName'],
             result['data']['lastName'],
-            result['data']['photo'],
-            result['data']['mobile']);
+            result['data']['mobile'],
+            result['data']['photo']);
+
 
         print(result);
 
@@ -186,8 +187,7 @@ class _LoginState extends State<Login> {
         _emailEtController.clear();
         _passwordEtController.clear();
 
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const Dashboard()));
+  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const Dashboard()), (route) => false);
       }
     }
   }

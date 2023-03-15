@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/data/shared_preferece_data.dart';
-import 'package:task_manager/ui/app_screen/LoginScreen.dart';
 import 'package:task_manager/ui/app_screen/new_task_screen.dart';
-import 'package:task_manager/ui/app_screen/update_profile_screen.dart';
 import 'package:task_manager/ui/task/cancel_task.dart';
 import 'package:task_manager/ui/task/compled_task.dart';
 import 'package:task_manager/ui/task/in_progress_task.dart';
 import 'package:task_manager/ui/task/new_task.dart';
-import '../widgets/top_profile_bar_widget.dart';
+import '../data/urls.dart';
+import '../widgets/app_bar_widget.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -33,6 +32,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     SharedPrefData.getDataFromSharedPref();
+
     super.initState();
   }
 
@@ -41,6 +41,15 @@ class _DashboardState extends State<Dashboard> {
 
 
     return Scaffold(
+        appBar: AppTaskBar(
+            context,
+            Urls.DefaultProfilePic ?? "",
+            SharedPrefData.userFirstName ?? "",
+            SharedPrefData.userLastName ?? "",
+            SharedPrefData.userEmail ?? "",
+
+
+        ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.green,
           onPressed: () {
@@ -72,16 +81,6 @@ class _DashboardState extends State<Dashboard> {
       body: SafeArea(
         child: Column(
           children: [
-            TopProfileBar(
-                userName: "${SharedPrefData.userFirstName} ${SharedPrefData.userLastName}",
-                userEmail: "${SharedPrefData.userEmail}",
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const UpdateProfile()));
-                },
-            onLogout: (){
-                  SharedPrefData.clearData();
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const Login()), (route) => false);
-            },),
             Expanded(child: navScreen.elementAt(_selectedScreen)),
           ],
         ),

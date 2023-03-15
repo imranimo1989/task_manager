@@ -40,6 +40,17 @@ dependencies:
   pin_code_fields: ^7.4.0
   http: ^0.13.5
   shared_preferences: ^2.0.18
+  flutter_launcher_icons: ^0.12.0
+  image_picker: ^0.8.7
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/appicon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+
+
 
 dev_dependencies:
   flutter_test:

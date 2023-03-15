@@ -86,7 +86,7 @@ class _SetPasswordAndVerifyState extends State<SetPasswordAndVerify> {
 
                       }else{
 
-                        snackBarMessage(context, "Plese input your password",true);
+                        snackBarMessage(context, "Please input your password",true);
                       }
 
 

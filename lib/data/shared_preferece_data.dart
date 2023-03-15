@@ -8,15 +8,16 @@ class SharedPrefData {
       userMobile,
       userPhoto;
 
-  static Future<void> saveDataToSharedPref(String token, String email,
+  static Future<void> saveDataToSharedPref(String? token, String email,
       String firstname, String lastName, String mobile, String photo) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString("token", token);
+    await sharedPreferences.setString("token", token??"");
     await sharedPreferences.setString("email", email);
     await sharedPreferences.setString("firstname", firstname);
     await sharedPreferences.setString("lastName", lastName);
-    await sharedPreferences.setString("photo", photo);
     await sharedPreferences.setString("mobile", mobile);
+    await sharedPreferences.setString("photo", photo);
+
 
 
     userToken = token;
