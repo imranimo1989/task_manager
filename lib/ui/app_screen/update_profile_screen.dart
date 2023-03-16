@@ -22,6 +22,8 @@ class UpdateProfile extends StatefulWidget {
 
 class _UpdateProfileState extends State<UpdateProfile> {
 
+  bool isLoading = false;
+
   TextEditingController textEditingControllerEmail = TextEditingController();
   TextEditingController textEditingControllerFirstName = TextEditingController();
   TextEditingController textEditingControllerLastName = TextEditingController();
@@ -35,6 +37,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
     textEditingControllerLastName.text = SharedPrefData.userLastName??"";
     textEditingControllerMobile.text =SharedPrefData.userMobile??"";
 
+
+
     super.initState();
   }
   XFile? imagePicker;
@@ -43,6 +47,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   Future<void> profileUpdate() async {
 
+    isLoading = true;
+    setState(() {});
     final response = await NetworkUtils.httpPostMethod(
       Urls.profileUpdate,
       header: {
@@ -57,20 +63,27 @@ class _UpdateProfileState extends State<UpdateProfile> {
       }
 
     );
+    isLoading = false;
+    setState(() {});
 
     if(response!=null&&response["status"]==["success"]){
-      snackBarMessage(context, "Profile Updated Successfully!!",false);
-
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      await sharedPreferences.setString("firstname", textEditingControllerFirstName.text.trim());
-      await sharedPreferences.setString("lastName", textEditingControllerLastName.text.trim());
-      await sharedPreferences.setString("mobile", textEditingControllerMobile.text.trim());
+      if (mounted) {
+        snackBarMessage(context, "Profile Updated Successfully!!",false);
 
 
-
+      }else {
+        snackBarMessage(context, "Something went wrong! please try again");
+      }
 
     }
 
+  }
+
+  Future<void> saveProfileDataToShareData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString("firstname", textEditingControllerFirstName.text.trim());
+    await sharedPreferences.setString("lastName", textEditingControllerLastName.text.trim());
+    await sharedPreferences.setString("mobile", textEditingControllerMobile.text.trim());
   }
   
 
@@ -121,10 +134,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                       topRight: Radius.circular(8),
                                       bottomRight: Radius.circular(8))),
                               child:  Padding(
-                                padding: EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(16.0),
                                 child: Text(
                                 imagePicker?.name??"", maxLines: 1, overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: const TextStyle(fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -173,7 +186,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         onPressed: () {
                           profileUpdate();
                         },
-                        child: const Icon(Icons.arrow_circle_right_outlined)),
+                        child:isLoading? (const CircularProgressIndicator()): const Icon(Icons.arrow_circle_right_outlined)),
                     const SizedBox(
                       height: 40,
                     ),
