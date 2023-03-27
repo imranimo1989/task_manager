@@ -76,7 +76,9 @@ class _MyNewTaskState extends State<MyNewTask> {
     if (result != null) {
       getNewTaskModel = GetTaskModel.fromJson(result);
     } else {
-      snackBarMessage(context, 'Something went wrong!!!', true);
+      if (mounted) {
+        snackBarMessage(context, 'Something went wrong!!!', true);
+      }
     }
   }
 

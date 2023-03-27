@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/ui/app_screen/LoginScreen.dart';
-import 'package:task_manager/ui/app_screen/SplashScreen.dart';
-import 'package:task_manager/ui/app_screen/email_verification_screen.dart';
-
-import 'package:task_manager/ui/app_screen/registration_screen.dart';
-import 'package:task_manager/ui/app_screen/set_password_screen.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() {
-  runApp( const Home('/SplashScreen'));
+  runApp( const Home());
 }
 
 class Home extends StatefulWidget {
-  final String homeRoute;
 
-  const Home(this.homeRoute, {super.key});
+
+  const Home( {super.key});
 
   static GlobalKey<NavigatorState> globalNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -24,18 +19,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       navigatorKey: Home.globalNavigatorKey,
       debugShowCheckedModeBanner: false,
-      initialRoute: widget.homeRoute,
-      routes: {
-        "/SplashScreen":(context) => const SplashScreen(),
-        '/Login': (context) => const Login(),
-        '/Registration': (context) => const Registration(),
-        '/ForgotPasswordAndEmailVerification': (context) =>const ForgotPasswordAndEmailVerification(),
-        '/SetPasswordAndVerify': (context) => const SetPasswordAndVerify(),
-        '/email_verify': (context) => const ForgotPasswordAndEmailVerification(),
-      },
+
     );
   }
 }

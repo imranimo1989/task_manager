@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/data/network_utils.dart';
 import 'package:task_manager/ui/Utills/Styles.dart';
 import 'package:task_manager/ui/dashboard_screen.dart';
@@ -128,10 +129,8 @@ class _NewTaskItemState extends State<NewTaskItem> {
 
         snackBarMessage(context, 'Task added Successful');
 
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const Dashboard()));
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => const Dashboard()));
+        Get.to(const Dashboard());
       }
     }
   }

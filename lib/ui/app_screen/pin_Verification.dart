@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/ui/Utills/SnacbarMessage.dart';
@@ -8,6 +9,8 @@ import '../../widgets/app_buttoon_style_widget.dart';
 import '../../widgets/screen_background_widget.dart';
 import '../Utills/Styles.dart';
 import 'package:http/http.dart' as http;
+
+import 'LoginScreen.dart';
 
 
 class PinVerification extends StatefulWidget {
@@ -73,7 +76,7 @@ class _PinVerificationState extends State<PinVerification> {
                       inactiveColor: Colors.white,
                       inactiveFillColor: Colors.white,
                     ),
-                    animationDuration: Duration(milliseconds: 300),
+                    animationDuration: const Duration(milliseconds: 300),
                     backgroundColor: null,
                     enableActiveFill: true,
                   ),
@@ -99,10 +102,8 @@ class _PinVerificationState extends State<PinVerification> {
                       if (response.statusCode == 200) {
 
                         snackBarMessage(context, "Please Reset Your Password Now", false);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SetPasswordAndVerify()));
+                        //Navigator.push( context,MaterialPageRoute(builder: (context) => SetPasswordAndVerify()));
+                        Get.to(const SetPasswordAndVerify());
                       } else {
                         (snackBarMessage(
                             context, "You entered envalid OTP code"));
@@ -110,7 +111,7 @@ class _PinVerificationState extends State<PinVerification> {
                     },
                     child: isLoading
                         ? (const CircularProgressIndicator())
-                        : Text(
+                        : const Text(
                             'Verify',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 16),
@@ -132,7 +133,8 @@ class _PinVerificationState extends State<PinVerification> {
                       ),
                       TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/Login');
+                            //Navigator.pushNamed(context, '/Login');
+                            Get.to(const Login());
                           },
                           child: const Text(
                             "Sign In",

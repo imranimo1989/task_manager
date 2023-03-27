@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/data/network_utils.dart';
 import 'package:task_manager/data/shared_preferece_data.dart';
 import 'package:task_manager/data/urls.dart';
 import 'package:task_manager/ui/Utills/SnacbarMessage.dart';
 import 'package:task_manager/ui/Utills/Styles.dart';
+import 'package:task_manager/ui/app_screen/email_verification_screen.dart';
+import 'package:task_manager/ui/app_screen/registration_screen.dart';
 import 'package:task_manager/widgets/screen_background_widget.dart';
 import '../../widgets/app_Text_Form_Field_Widget.dart';
 import '../../widgets/app_buttoon_style_widget.dart';
@@ -109,8 +113,8 @@ class _LoginState extends State<Login> {
                         children: [
                           TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context,
-                                    "/ForgotPasswordAndEmailVerification");
+                              //  Navigator.pushNamed(context,"/ForgotPasswordAndEmailVerification");
+                                Get.to(const ForgotPasswordAndEmailVerification());
                               },
                               child: const Text(
                                 "Forget password ?",
@@ -129,7 +133,8 @@ class _LoginState extends State<Login> {
                                       fontWeight: FontWeight.w600)),
                               TextButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/Registration');
+                                   // Navigator.pushNamed(context, '/Registration');
+                                    Get.to(const Registration());
                                   },
                                   child: const Text(
                                     "Sign Up",
@@ -187,7 +192,8 @@ class _LoginState extends State<Login> {
         _emailEtController.clear();
         _passwordEtController.clear();
 
-  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const Dashboard()), (route) => false);
+  //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const Dashboard()), (route) => false);
+  Get.offAll(const Dashboard());
       }
     }
   }

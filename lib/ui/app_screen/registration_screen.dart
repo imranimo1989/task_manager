@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/data/network_utils.dart';
 import 'package:task_manager/data/urls.dart';
@@ -9,6 +10,7 @@ import '../../widgets/app_buttoon_style_widget.dart';
 import '../../widgets/screen_background_widget.dart';
 import '../Utills/SnacbarMessage.dart';
 import '../Utills/Styles.dart';
+import 'LoginScreen.dart';
 
 
 class Registration extends StatefulWidget {
@@ -151,7 +153,8 @@ class _RegistrationState extends State<Registration> {
                           ),
                           TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/Login');
+                                //Navigator.pushNamed(context, '/Login');
+                                Get.to(const Login());
                               },
                               child: const Text(
                                 "Sign In",
@@ -213,7 +216,8 @@ class _RegistrationState extends State<Registration> {
         snackBarMessage(context, "Registration failed! try again", true);
       }
 
-      Navigator.pushNamed(context, '/Login');
+     // Navigator.pushNamed(context, '/Login');
+      Get.to(const Login());
     }
   }
 }

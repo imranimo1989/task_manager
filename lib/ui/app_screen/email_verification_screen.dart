@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/ui/Utills/SnacbarMessage.dart';
 import 'package:http/http.dart' as http;
+import 'package:task_manager/ui/app_screen/LoginScreen.dart';
 import 'package:task_manager/ui/app_screen/pin_Verification.dart';
 
 import '../../data/urls.dart';
@@ -60,7 +62,8 @@ class _ForgotPasswordAndEmailVerificationState
                   final response = await http.get(Uri.parse(Urls.forgetPassword(textEditingController.text)));
                  isLoading = false;
                  if(response.statusCode==200){
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=>PinVerification(textEditingController.text)));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>PinVerification(textEditingController.text)));
+                   Get.to(PinVerification(textEditingController.text));
                  }
                }else{
                  snackBarMessage(context, "Please enter your register email address",true);
@@ -84,8 +87,8 @@ class _ForgotPasswordAndEmailVerificationState
                     ),
                     TextButton(
                         onPressed: () {
-
-                          Navigator.pushNamed(context, "/Login");
+                          //Navigator.pushNamed(context, "/Login");
+                          Get.to(const Login());
                         },
                         child: const Text(
                           "Sign In",

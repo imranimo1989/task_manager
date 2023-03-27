@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/data/network_utils.dart';
 import 'package:task_manager/ui/Utills/SnacbarMessage.dart';
@@ -118,7 +119,8 @@ class _SetPasswordAndVerifyState extends State<SetPasswordAndVerify> {
                             resetPassword();
                             
                             
-                            Navigator.pushNamed(context, "/Login");
+                            //Navigator.pushNamed(context, "/Login");
+                            Get.to(const Login());
                           },
                           child: const Text(
                             "Sign In",
@@ -158,7 +160,8 @@ class _SetPasswordAndVerifyState extends State<SetPasswordAndVerify> {
 
     if(response != null){
       snackBarMessage(context, "Password Reset Successfully! Please login to enter",true);
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const Login()), (route) => false);
+      //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const Login()), (route) => false);
+      Get.offAll(const Login(),predicate: (route)=>false);
 
     }
     

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/data/shared_preferece_data.dart';
 import 'package:task_manager/ui/app_screen/LoginScreen.dart';
 import 'package:task_manager/ui/dashboard_screen.dart';
@@ -23,15 +24,11 @@ class _SplashScreenState extends State<SplashScreen> {
     final bool result = await SharedPrefData.checkLoginState();
     if (result) {
       SharedPrefData.getDataFromSharedPref();
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const Dashboard()),
-          (route) => false);
+      //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Dashboard()),(route) => false);
+      Get.offAll(const Dashboard(),predicate: (route)=>false);
     }else{
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const Login()),
-              (route) => false);
+      //Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => const Login()),(route) => false);
+      Get.offAll(const Login(),predicate: (route)=>false);
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/data/shared_preferece_data.dart';
 import 'package:task_manager/ui/app_screen/new_task_screen.dart';
 import 'package:task_manager/ui/task/cancel_task.dart';
@@ -43,7 +44,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
         appBar: AppTaskBar(
             context,
-            Urls.DefaultProfilePic ?? "",
+            Urls.DefaultProfilePic,
             SharedPrefData.userFirstName ?? "",
             SharedPrefData.userLastName ?? "",
             SharedPrefData.userEmail ?? "",
@@ -53,7 +54,8 @@ class _DashboardState extends State<Dashboard> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.green,
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const NewTaskItem()));
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => const NewTaskItem()));
+            Get.to(const NewTaskItem());
           },
           child: const Icon(Icons.add),
         ),
